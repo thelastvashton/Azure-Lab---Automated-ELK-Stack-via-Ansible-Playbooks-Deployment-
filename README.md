@@ -99,6 +99,7 @@ Use of the ELK server deployment playbook requires that the Ansible control node
   `sudo nano etc/ansible/hosts`
   
   [elk]
+  
   <ELK server IP> ansible_python_interpreter=/usr/bin/python3
 
 - Actually running the playbook
