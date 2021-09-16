@@ -1,0 +1,38 @@
+---
+- name: ELK Playbook
+  hosts: elk
+  remote_user: badmin
+  become: true
+  tasks:
+  - name: set vm.max_map_count to 262144 in sysctl
+    sysctl: name={{ item.key }} value={{ item.value }}
+    with_items:
+      - { key: "vm.max_map_count", value: "262144" }
+  - name: docker.io
+    apt:
+      force_apt_get: yes
+      update_cache: yes
+      name: docker.io
+      state: present
+  - name: install pip3
+    apt:
+      name: python3-pip
+      state: present
+  - name: install docker python module
+    pip:
+      name: docker
+      state: present
+  - name: download elk container
+    docker_container:
+      name: elk
+      image: sebp/elk:761
+      state: started
+      restart_policy: always
+      published_ports:
+        - 5601:5601
+        - 9200:9200
+        - 5044:5044
+  - name: run stuff after boot
+    systemd:
+      name: docker
+      enabled: yes
