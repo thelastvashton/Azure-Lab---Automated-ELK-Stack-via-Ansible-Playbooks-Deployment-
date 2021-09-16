@@ -97,8 +97,10 @@ Use of the ELK server deployment playbook requires that the Ansible control node
   load settings after reboot
 - Updating the Ansible hosts file to include the ELK server IP address in its own distinct host pattern in python-readable format
   `sudo nano etc/ansible/hosts`
+  
   [elk]
   <ELK server IP> ansible_python_interpreter=/usr/bin/python3
+
 - Actually running the playbook
   `ansible-playbook install-elk.yml`
 - Navigating to `<ELK server public IP>:5601`
